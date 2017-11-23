@@ -55,10 +55,15 @@ use constant::boolean;
 ##################################################################
 sub get_dbh ($;$) {
 	my $cfg = shift;
-	my $dbtype = $cfg->{'DBType'} || 'mysql';
 	my $opt = shift ||
-	{ RaiseError => 1, AutoCommit => 0, ( $dbtype eq 'mysql' ? ' mysql_enable_utf8 => 1' : '' ) };
+	{ RaiseError => 1, AutoCommit => 0 };
 
+	my $dbtype = $cfg->{'DBType'} || 'mysql';
+	
+	if($dbtype eq 'mysql') {
+		$opt->{'mysql_enable_utf8'} => 1;
+	}
+	
 	my $dbname = $cfg->{'DBName'} || '';
 	my $dbuser = $cfg->{'DBUser'} || '';
 	my $dbpass = $cfg->{'DBPass'} || '';
