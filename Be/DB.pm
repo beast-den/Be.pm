@@ -61,7 +61,7 @@ sub get_dbh ($;$) {
 	my $dbtype = $cfg->{'DBType'} || 'mysql';
 	
 	if($dbtype eq 'mysql') {
-		$opt->{'mysql_enable_utf8'} => 1;
+		$opt->{'mysql_enable_utf8'} = 1;
 	}
 	
 	my $dbname = $cfg->{'DBName'} || '';
