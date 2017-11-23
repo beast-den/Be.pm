@@ -30,15 +30,15 @@ sub send_mail ($$$$$) {
 	my $email = shift; # Recipient's email
 	my $subjt = shift; # Subject
 	my $messg = shift; # Message body
-	my $optns = shift; # { mail_from => $Config->{'noreply_from'}, smtp_user => $Config->{'noreply_mail'}, smtp_pass => $Config->{'noreply_pass'}, smtp_host => 'smtp.yandex.ru', smtp_SSL => 1, smtp_port => 465, msg_type => 'html', smtp_debug => 0 };
+	my $optns = shift; # { mail_from => $Config->{'mail_from'}, smtp_user => $Config->{'smtp_user'}, smtp_pass => $Config->{'smtp_pass'}, smtp_host => 'smtp.yandex.ru', smtp_SSL => 1, smtp_port => 465, msg_type => 'html', smtp_debug => 0 };
 	################################################################
-    my $from  = $optns->{'mail_from'};
+    	my $from  = $optns->{'mail_from'};
 	my $uname = $optns->{'smtp_user'};
 	my $passw = $optns->{'smtp_pass'};
 	my $htmlm = $optns->{'mail_type'} || 'plain';
 
 	my $smtp = Net::SMTP->new($optns->{'smtp'},
-		SSL		=> $optns->{'smtp_SSL'} || 0,
+		SSL	=> $optns->{'smtp_SSL'} || 0,
 		Port	=> $optns->{'smtp_port'} || 25,
 		Debug	=> $optns->{'smtp_debug'} || 0,
 	);
