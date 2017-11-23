@@ -55,11 +55,10 @@ use constant::boolean;
 ##################################################################
 sub get_dbh ($;$) {
 	my $cfg = shift;
-	my $opt = shift ||
-	{ RaiseError => 1, AutoCommit => 0, mysql_enable_utf8 => 1 };
-
-
 	my $dbtype = $cfg->{'DBType'} || 'mysql';
+	my $opt = shift ||
+	{ RaiseError => 1, AutoCommit => 0 ( $dbtype eq 'mysql' ? ', mysql_enable_utf8 => 1' : '' ) };
+
 	my $dbname = $cfg->{'DBName'} || '';
 	my $dbuser = $cfg->{'DBUser'} || '';
 	my $dbpass = $cfg->{'DBPass'} || '';
@@ -75,15 +74,11 @@ sub get_dbh ($;$) {
 	}
 
 	my $dsn = "dbi:" . $dbtype . ":dbname=" . $dbname;
-	$dsn .= ";host=" . $dbhost if defined $dbhost;
+	$dsn .= ";host=" . $dbhost if $dbhost;
 	$dsn .= ";mysql_socket=" . $socket if defined $socket;
 	$dsn .= ";port=" . $port_n if int($port_n);
 	$dsn .= ";mysql_read_default_file=" . $my_cnf if defined $my_cnf;
 
-#	if(! defined(wantarray)) {
-#		print $dsn;
-	}
-#	
 	my $dbh;
 	eval {
 		$dbh = DBI->connect($dsn, $dbuser, $dbpass, $opt) or die;
