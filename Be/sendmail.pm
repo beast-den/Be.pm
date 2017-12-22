@@ -6,7 +6,7 @@
 # v.1.1: [2017-07-31 14:05:43+03]
 # Initial public release.
 ###########################################################################
-package Be::SMTP;
+package Be::sendmail;
 
 $VERSION = '1.1';
 
