@@ -1,6 +1,6 @@
 ##################################################################
-# $Id: DB.pm,v 1.3 2017-07-31 12:39:33+03 beast Exp beast $
-##################################################################
+# $Id: DB.pm,v 1.4 2018-02-01 19:45:15+03 beast Exp beast $
+##########################0########################################
 #
 #                  Databases related subroutines
 #                  -----------------------------
@@ -8,6 +8,9 @@
 # ----------------------------------------------------------------
 # Changelog:
 # ---------
+# v.1.4: [2018-02-01 19:45:15+03]
+# Added dbh() subroutine.
+#
 # v.1.3: [2017-07-31 12:39:33+03]
 # Had to get rid of "SET NAMES 'utf8';" request, mentioned in
 # previous record. The reason is simple - I started experimenting
@@ -33,12 +36,13 @@
 ##################################################################
 package Be::DB;
 
-$VERSION = '1.3';
+$VERSION = 1.4;
 
 require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(
 	get_dbh
+	dbh
 );
 
 ##################################################################
@@ -94,6 +98,11 @@ sub get_dbh ($;$) {
 	return $dbh;
 }
 
+sub dbh ($) {
+	my $cfg = shift;
+	return undef unless ref($cfg) eq 'HASH';
+	return get_dbh($cfg);
+}
 ##################################################################
 
 1;
